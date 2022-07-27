@@ -1,9 +1,5 @@
 ﻿using SpreadsheetLight;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace ConsoleApp1
 {
@@ -11,11 +7,20 @@ namespace ConsoleApp1
    {
       static void Main(string[] args)
       {
-         using (SLDocument sl = new SLDocument($"d:\\tmp\\ipsYdion ZV Abrechnung Master - ipsYdion - alt.xlsx", "Tabelle1"))
+         string temp = $"PathToFile\\FilenameOfExcel_tmp.xlsx";
+         string dest = $"PathToFile\\FilenameOfExcel.xlsx";
+         File.Copy(dest, temp);
+         SLDocument sheet;
+         using (SLDocument sl = new SLDocument())
          {
-            //var templateSheet = new SLDocument($"d:\\tmp\\IpsYdion ZV Abrechnung Master.xlsx", "Tabelle1");
-            sl.SaveAs($"d:\\tmp\\abc.xlsx");
+            sheet = new SLDocument(temp);
          }
+
+         using (SLDocument sl = new SLDocument(temp))
+         {
+            sheet.SaveAs(dest);
+         }
+         File.Delete(temp);
       }
    }
 }
